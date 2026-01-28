@@ -1,0 +1,117 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #13ec5b;
+  --color-background-light: #f6f8f6;
+  --color-background-dark: #102216;
+  --color-surface-dark: #193322;
+  --color-border-dark: #23482f;
+
+  --font-display: "Lexend", sans-serif;
+  --font-sans: "Lexend", sans-serif;
+}
+
+/* Material Symbols Utility */
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'liga';
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+@layer base {
+  body {
+    @apply font-sans bg-background-light dark:bg-background-dark text-slate-900 dark:text-white transition-colors duration-300;
+  }
+}
+
+@layer utilities {
+  .bg-gradient-mesh {
+    background-color: #102216;
+    background-image:
+      radial-gradient(at 0% 0%, hsla(140, 85%, 15%, 1) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, hsla(140, 85%, 10%, 1) 0px, transparent 50%);
+  }
+
+  .bg-mesh {
+    background-color: #102216;
+    background-image:
+      radial-gradient(at 0% 0%, rgba(19, 236, 91, 0.15) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, rgba(19, 236, 91, 0.1) 0px, transparent 50%);
+  }
+
+  /* Custom Scrollbar */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #102216;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #23482f;
+    border-radius: 10px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #13ec5b;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Hide number input spinners */
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  details>summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .chart-bar {
+    @apply bg-primary rounded-t-sm transition-all duration-300;
+  }
+
+  .chart-line-dot {
+    @apply w-3 h-3 bg-primary border-4 border-[#193322] rounded-full absolute -translate-x-1/2 -translate-y-1/2;
+  }
+
+  .toggle-checkbox:checked {
+    @apply right-0 border-primary bg-primary;
+  }
+
+  .toggle-checkbox:checked+.toggle-label {
+    @apply bg-primary/30;
+  }
+
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+  }
+
+  .input-dark {
+    @apply bg-[#0c1a11] border-[#23482f] text-white focus:ring-primary focus:border-primary block w-full rounded-lg sm:text-sm transition-all border;
+  }
+}
