@@ -1,10 +1,32 @@
 "use client";
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { supabase } from '@/lib/supabase/client';
+import { useEffect, useState } from 'react';
 
 export function Sidebar() {
     const pathname = usePathname();
+    const router = useRouter();
+    const [userName, setUserName] = useState("User");
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            const { data: { user } } = await supabase.auth.getUser();
+            if (user) {
+                const fullName = user.user_metadata?.full_name;
+                const name = user.user_metadata?.name;
+                const emailName = user.email ? user.email.split('@')[0] : "User";
+                setUserName(fullName || name || emailName);
+            }
+        };
+        fetchUser();
+    }, []);
+
+    const handleLogout = async () => {
+        await supabase.auth.signOut();
+        router.push('/');
+    };
 
     const isActive = (path: string) => {
         return pathname === path || pathname?.startsWith(path + '/');
@@ -27,7 +49,7 @@ export function Sidebar() {
                         style={{ backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuBavZ0ImoFujtb4yMeSKsAnleHc4AAR2LUym5T1BVJ95LlTCgtLcMctMCeZzN05fjQRXoxiM1_7HuxlwbvuJ9AUsRWg-9nBWp8JDVochOE1L8L8tjppiZk0iMYYWhanvL0w9s0LMrrh8FpPPBZgfzH_HsB07CD_cgFeVsasPK8DgJxk9IclVmEmQ0lmY2Yyz37BwUbJDkP5vhePJTySgoI-Fy21EDtHwNnevfapCnqxtMHPhN-ItEeFpJtS0yDXLvcuEOFljKiNIIk")' }}
                     ></div>
                     <div className="flex flex-col">
-                        <h1 className="text-slate-900 dark:text-white text-base font-semibold leading-tight">Alex Rivera</h1>
+                        <h1 className="text-slate-900 dark:text-white text-base font-semibold leading-tight">{userName}</h1>
                         <p className="text-slate-500 dark:text-[#92c9a4] text-xs font-normal">Premium Member</p>
                     </div>
                 </div>
@@ -56,10 +78,10 @@ export function Sidebar() {
                         <span className="material-symbols-outlined">settings</span>
                         <span className="text-sm">Settings</span>
                     </Link>
-                    <Link href="/logout" className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-red-500 hover:bg-red-50 transition-colors">
+                    <button onClick={handleLogout} className="flex w-full items-center gap-3 px-3 py-2.5 rounded-lg text-red-500 hover:bg-red-50 transition-colors cursor-pointer">
                         <span className="material-symbols-outlined">logout</span>
                         <span className="text-sm font-medium">Log out</span>
-                    </Link>
+                    </button>
                 </div>
             </div>
         </aside>

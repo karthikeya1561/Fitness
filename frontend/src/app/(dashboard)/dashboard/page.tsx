@@ -2,8 +2,25 @@
 
 import { Sidebar } from "@/components/Sidebar";
 import Link from "next/link";
+import { useEffect, useState } from 'react';
+import { supabase } from '@/lib/supabase/client';
 
 export default function DashboardPage() {
+    const [userName, setUserName] = useState("User");
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            const { data: { user } } = await supabase.auth.getUser();
+            if (user) {
+                const fullName = user.user_metadata?.full_name;
+                const name = user.user_metadata?.name;
+                const emailName = user.email ? user.email.split('@')[0] : "User";
+                setUserName(fullName || name || emailName);
+            }
+        };
+        fetchUser();
+    }, []);
+
     return (
         <div className="flex h-screen overflow-hidden bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen font-display">
             <Sidebar />
@@ -36,7 +53,7 @@ export default function DashboardPage() {
                 <div className="p-8 max-w-6xl mx-auto w-full">
                     {/* Headline */}
                     <div className="mb-8">
-                        <h1 className="text-slate-900 dark:text-white text-4xl font-bold tracking-tight mb-2">Welcome back, Alex!</h1>
+                        <h1 className="text-slate-900 dark:text-white text-4xl font-bold tracking-tight mb-2">Welcome back, {userName}!</h1>
                         <p className="text-slate-500 dark:text-[#92c9a4]">You&apos;ve completed 4 workouts this week. Keep up the momentum!</p>
                     </div>
 
