@@ -1,2 +1,41 @@
-# Python requirements
-# Add your dependencies here
+# Project Requirements & Libraries
+
+## System Requirements
+- Java Development Kit (JDK) 25
+- Node.js (Latest LTS recommended)
+- Maven (for Backend build)
+- npm (for Frontend package management)
+
+## Backend Libraries (Java / Spring Boot)
+# Defined in backend/pom.xml
+
+- spring-boot-starter-data-jpa (Database / ORM)
+- spring-boot-starter-webmvc (Web Framework)
+- lombok (Boilerplate reduction)
+- spring-boot-starter-data-jpa-test (Testing)
+- spring-boot-starter-webmvc-test (Testing)
+
+## Frontend Libraries (Next.js / React)
+# Defined in frontend/package.json
+
+### Core
+- next: 16.1.6
+- react: 19.2.3
+- react-dom: 19.2.3
+
+### Supabase (Authentication & Database)
+- @supabase/ssr: ^0.8.0
+- @supabase/supabase-js: ^2.93.3
+
+### Styling
+- tailwindcss: ^4.1.18
+- @tailwindcss/postcss: ^4.1.18
+- postcss: ^8.5.6
+
+### Development & Type Safety
+- typescript: ^5
+- eslint: ^9
+- eslint-config-next: 16.1.6
+- @types/node
+- @types/react
+- @types/react-dom
