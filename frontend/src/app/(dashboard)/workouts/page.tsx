@@ -1,89 +1,69 @@
 "use client";
 
+import { Sidebar, useSidebar } from "@/components/Sidebar";
 import Link from 'next/link';
 
 export default function WorkoutsPage() {
+    const { sidebarOpen, openSidebar, closeSidebar } = useSidebar();
+
     return (
-        <div className="flex flex-col min-h-screen bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display">
-            <div className="layout-container flex h-full grow flex-col">
-                {/* Top Navigation */}
-                <header className="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-[#23482f] px-10 py-3 bg-background-light dark:bg-background-dark sticky top-0 z-50">
-                    <div className="flex items-center gap-8">
-                        <div className="flex items-center gap-4 text-slate-900 dark:text-white">
-                            <div className="size-6 text-primary">
-                                <span className="material-symbols-outlined text-3xl">fitness_center</span>
-                            </div>
-                            <h2 className="text-lg font-bold leading-tight tracking-[-0.015em]">FitnessTracker</h2>
-                        </div>
+        <div className="flex h-screen overflow-hidden bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display">
+            <Sidebar mobileOpen={sidebarOpen} onClose={closeSidebar} />
+            <main className="flex-1 flex flex-col overflow-y-auto min-w-0">
+                {/* Top Header */}
+                <header className="sticky top-0 z-10 flex items-center justify-between border-b border-slate-200 dark:border-[#23482f] bg-white/80 dark:bg-[#112217]/80 backdrop-blur-md px-4 md:px-8 py-4">
+                    <div className="flex items-center gap-3">
+                        <button onClick={openSidebar} className="lg:hidden p-2 rounded-lg text-slate-600 dark:text-white hover:bg-slate-100 dark:hover:bg-white/10 transition-colors" aria-label="Open menu">
+                            <span className="material-symbols-outlined text-[22px] leading-none">menu</span>
+                        </button>
+                        <h2 className="text-slate-900 dark:text-white text-lg md:text-xl font-bold tracking-tight">Workouts</h2>
                     </div>
-                    <div className="flex flex-1 justify-end gap-8">
-                        <nav className="flex items-center gap-9">
-                            <Link className="text-sm font-medium leading-normal hover:text-primary transition-colors" href="/dashboard">Dashboard</Link>
-                            <Link className="text-primary text-sm font-medium leading-normal" href="/workouts">Workouts</Link>
-                            <Link className="text-sm font-medium leading-normal hover:text-primary transition-colors" href="/exercises">Exercises</Link>
-                            <Link className="text-sm font-medium leading-normal hover:text-primary transition-colors" href="/progress">Progress</Link>
-                        </nav>
-                        <div className="flex items-center gap-4">
-                            <button className="flex items-center justify-center rounded-lg h-10 w-10 bg-slate-100 dark:bg-[#23482f] hover:bg-primary/20 transition-all cursor-pointer">
-                                <span className="material-symbols-outlined text-xl">notifications</span>
-                            </button>
-                            <div
-                                className="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary"
-                                data-alt="User profile avatar portrait"
-                                style={{ backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuARpNT0cRlD9wK_07832xH3NQO5-c89ATLUXCRwPeHAX2s-sEgsrueeiqZQOW_ufnfsAqgyPDuRwraFS6fSNg5RIrU5YUfY-FdduaTENwgvB2S1blyOBIEgHzbY971iwQkVxBodw7Z4STrgMz2CUU0YYRUvxo-UoubhTypM5pBJrtXGGosSlajuYVmIiO16SAma6ZuViytHnCaEOwYOZg7EFOOjF9znWnK_Suazj8b6fOfuxA5aKzL0VPtPRRCgoEXyy0QSs687nYU")' }}
-                            ></div>
-                        </div>
-                    </div>
+                    <Link href="/routines/create" className="flex items-center justify-center gap-1.5 rounded-lg h-9 md:h-10 px-3 md:px-5 bg-primary text-background-dark text-sm font-bold hover:scale-105 transition-transform cursor-pointer">
+                        <span className="material-symbols-outlined text-[18px] leading-none">add</span>
+                        <span className="hidden sm:inline">New Routine</span>
+                    </Link>
                 </header>
 
-                <main className="flex-1 flex flex-col max-w-[1280px] mx-auto w-full px-4 md:px-10 py-8">
-                    {/* Page Heading */}
-                    <div className="flex flex-wrap justify-between items-end gap-3 mb-8">
-                        <div className="flex min-w-72 flex-col gap-1">
-                            <p className="text-slate-900 dark:text-white text-4xl font-black leading-tight tracking-[-0.033em]">Workouts</p>
-                            <p className="text-slate-500 dark:text-[#92c9a4] text-base font-normal leading-normal">Manage your routines and view your history</p>
-                        </div>
-                        <Link href="/routines/create" className="flex min-w-[84px] cursor-pointer items-center justify-center gap-2 rounded-lg h-12 px-6 bg-primary text-background-dark text-sm font-bold leading-normal tracking-[0.015em] hover:scale-105 transition-transform">
-                            <span className="material-symbols-outlined">add</span>
-                            <span className="truncate">New Routine</span>
-                        </Link>
-                    </div>
-
-                    {/* Active Workouts / Quick Start */}
-                    <section className="mb-12">
-                        <h3 className="text-slate-900 dark:text-white text-xl font-bold mb-4">Quick Start</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="p-4 md:p-8 max-w-6xl mx-auto w-full">
+                    {/* Quick Start */}
+                    <section className="mb-8 md:mb-12">
+                        <h3 className="text-slate-900 dark:text-white text-lg md:text-xl font-bold mb-4 md:mb-6">Quick Start</h3>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                             {/* Card 1 */}
-                            <div className="bg-white dark:bg-[#1a2e21] rounded-xl p-6 border border-slate-200 dark:border-[#23482f] hover:border-primary/50 transition-all shadow-sm group cursor-pointer">
-                                <div className="flex justify-between items-start mb-4">
-                                    <div className="p-3 bg-primary/10 rounded-lg text-primary">
-                                        <span className="material-symbols-outlined text-2xl">fitness_center</span>
+                            <div className="bg-white dark:bg-[#193322] rounded-xl p-4 md:p-6 border border-slate-200 dark:border-[#23482f] hover:border-primary/50 transition-all shadow-sm group cursor-pointer">
+                                <div className="flex justify-between items-start mb-4 md:mb-5">
+                                    <div className="p-2.5 md:p-3 bg-primary/10 rounded-lg text-primary flex items-center justify-center">
+                                        <span className="material-symbols-outlined text-xl md:text-2xl leading-none">fitness_center</span>
                                     </div>
-                                    <span className="bg-slate-100 dark:bg-[#112217] text-slate-500 dark:text-[#92c9a4] text-xs font-bold px-2 py-1 rounded">Last done: 2 days ago</span>
+                                    <span className="bg-slate-100 dark:bg-[#112217] text-slate-500 dark:text-[#92c9a4] text-[10px] md:text-xs font-bold px-2 py-1 rounded">Last done: 2 days ago</span>
                                 </div>
-                                <h4 className="text-slate-900 dark:text-white font-bold text-lg mb-2">Push Day A</h4>
-                                <p className="text-slate-500 dark:text-[#92c9a4] text-sm mb-6">Chest, Shoulders, Triceps focus with heavy compounds.</p>
-                                <button className="w-full h-10 rounded-lg bg-primary text-background-dark font-bold text-sm hover:scale-[1.02] active:scale-95 transition-all">Start Workout</button>
+                                <h4 className="text-slate-900 dark:text-white font-bold text-base md:text-lg mb-1 md:mb-2">Push Day A</h4>
+                                <p className="text-slate-500 dark:text-[#92c9a4] text-sm mb-4 md:mb-6">Chest, Shoulders, Triceps focus with heavy compounds.</p>
+                                <Link href="/workouts/live" className="flex items-center justify-center w-full h-10 rounded-lg bg-primary text-background-dark font-bold text-sm hover:scale-[1.02] active:scale-95 transition-all">
+                                    Start Workout
+                                </Link>
                             </div>
                             {/* Card 2 */}
-                            <div className="bg-white dark:bg-[#1a2e21] rounded-xl p-6 border border-slate-200 dark:border-[#23482f] hover:border-primary/50 transition-all shadow-sm group cursor-pointer">
-                                <div className="flex justify-between items-start mb-4">
-                                    <div className="p-3 bg-primary/10 rounded-lg text-primary">
-                                        <span className="material-symbols-outlined text-2xl">directions_run</span>
+                            <div className="bg-white dark:bg-[#193322] rounded-xl p-4 md:p-6 border border-slate-200 dark:border-[#23482f] hover:border-primary/50 transition-all shadow-sm group cursor-pointer">
+                                <div className="flex justify-between items-start mb-4 md:mb-5">
+                                    <div className="p-2.5 md:p-3 bg-primary/10 rounded-lg text-primary flex items-center justify-center">
+                                        <span className="material-symbols-outlined text-xl md:text-2xl leading-none">directions_run</span>
                                     </div>
-                                    <span className="bg-slate-100 dark:bg-[#112217] text-slate-500 dark:text-[#92c9a4] text-xs font-bold px-2 py-1 rounded">Last done: 5 days ago</span>
+                                    <span className="bg-slate-100 dark:bg-[#112217] text-slate-500 dark:text-[#92c9a4] text-[10px] md:text-xs font-bold px-2 py-1 rounded">Last done: 5 days ago</span>
                                 </div>
-                                <h4 className="text-slate-900 dark:text-white font-bold text-lg mb-2">Pull Day B</h4>
-                                <p className="text-slate-500 dark:text-[#92c9a4] text-sm mb-6">Back and Biceps focus with deadlifts.</p>
-                                <button className="w-full h-10 rounded-lg bg-slate-100 dark:bg-[#23482f] text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-[#2d5c3c] font-bold text-sm transition-all">Start Workout</button>
+                                <h4 className="text-slate-900 dark:text-white font-bold text-base md:text-lg mb-1 md:mb-2">Pull Day B</h4>
+                                <p className="text-slate-500 dark:text-[#92c9a4] text-sm mb-4 md:mb-6">Back and Biceps focus with deadlifts.</p>
+                                <Link href="/workouts/live" className="flex items-center justify-center w-full h-10 rounded-lg bg-slate-100 dark:bg-[#23482f] text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-[#2d5c3c] font-bold text-sm transition-all">
+                                    Start Workout
+                                </Link>
                             </div>
                             {/* Empty Workout Card */}
-                            <div className="bg-white dark:bg-[#1a2e21] rounded-xl p-6 border border-2 border-dashed border-slate-200 dark:border-[#23482f] hover:border-primary/50 transition-all shadow-sm group cursor-pointer flex flex-col items-center justify-center text-center">
-                                <div className="p-3 bg-slate-100 dark:bg-[#112217] rounded-full text-slate-400 mb-4 group-hover:bg-primary group-hover:text-background-dark transition-colors">
-                                    <span className="material-symbols-outlined text-2xl">add</span>
+                            <div className="bg-white dark:bg-[#193322] rounded-xl p-4 md:p-6 border-2 border-dashed border-slate-200 dark:border-[#23482f] hover:border-primary/50 transition-all shadow-sm group cursor-pointer flex flex-col items-center justify-center text-center min-h-[160px]">
+                                <div className="p-3 md:p-4 bg-slate-100 dark:bg-[#112217] rounded-full text-slate-400 mb-3 md:mb-4 group-hover:bg-primary group-hover:text-background-dark transition-colors flex items-center justify-center">
+                                    <span className="material-symbols-outlined text-xl md:text-2xl leading-none">add</span>
                                 </div>
-                                <h4 className="text-slate-900 dark:text-white font-bold text-lg mb-1">Empty Workout</h4>
-                                <p className="text-slate-500 dark:text-[#92c9a4] text-sm mb-4">Start from scratch without a template</p>
+                                <h4 className="text-slate-900 dark:text-white font-bold text-base md:text-lg mb-1">Empty Workout</h4>
+                                <p className="text-slate-500 dark:text-[#92c9a4] text-sm mb-3 md:mb-4">Start from scratch without a template</p>
                                 <Link href="/workouts/live" className="text-primary font-bold text-sm hover:underline">Launch Logger</Link>
                             </div>
                         </div>
@@ -91,97 +71,53 @@ export default function WorkoutsPage() {
 
                     {/* Recent History */}
                     <section>
-                        <div className="flex items-center justify-between mb-6">
-                            <h3 className="text-slate-900 dark:text-white text-xl font-bold">Recent History</h3>
-                            <button className="text-sm font-bold text-primary hover:underline">View All</button>
+                        <div className="flex items-center justify-between mb-4 md:mb-6">
+                            <h3 className="text-slate-900 dark:text-white text-lg md:text-xl font-bold">Recent History</h3>
+                            <button className="text-sm font-bold text-primary hover:underline cursor-pointer">View All</button>
                         </div>
-                        <div className="bg-white dark:bg-[#1a2e21] rounded-xl border border-slate-200 dark:border-[#23482f] overflow-hidden">
-                            {/* List Item 1 */}
-                            <div className="flex flex-col md:flex-row items-center justify-between p-4 border-b border-slate-100 dark:border-[#23482f] hover:bg-slate-50 dark:hover:bg-[#112217] transition-colors">
-                                <div className="flex items-center gap-4 w-full md:w-auto">
-                                    <div className="w-12 h-12 rounded-lg bg-slate-100 dark:bg-[#112217] flex items-center justify-center text-slate-500 dark:text-[#92c9a4]">
-                                        <span className="text-xs font-bold">FEB</span>
-                                        <span className="text-lg font-bold block -mt-1">12</span>
-                                    </div>
-                                    <div>
-                                        <h4 className="text-slate-900 dark:text-white font-bold">Leg Day - Hypertrophy</h4>
-                                        <div className="flex gap-3 text-xs text-slate-500 dark:text-[#92c9a4]">
-                                            <span>65 mins</span>
-                                            <span>•</span>
-                                            <span>18,450 kg Vol</span>
-                                            <span>•</span>
-                                            <span>8 PRs</span>
+                        <div className="bg-white dark:bg-[#193322] rounded-xl border border-slate-200 dark:border-[#23482f] overflow-hidden">
+                            {[
+                                { month: 'FEB', day: '12', title: 'Leg Day — Hypertrophy', duration: '65 mins', volume: '18,450 kg Vol', prs: '8 PRs', label: 'Est. 1RM Squat', value: '140 kg', change: '▲ 2.5kg', positive: true },
+                                { month: 'FEB', day: '10', title: 'Push Day A', duration: '50 mins', volume: '12,300 kg Vol', prs: '2 PRs', label: 'Est. 1RM Bench', value: '95 kg', change: '—', positive: false },
+                                { month: 'FEB', day: '08', title: 'Pull Day B', duration: '55 mins', volume: '14,100 kg Vol', prs: '', label: 'Est. 1RM Deadlift', value: '160 kg', change: '▲ 5kg', positive: true },
+                            ].map((item, i, arr) => (
+                                <div key={i} className={`flex items-center justify-between p-4 md:p-5 ${i < arr.length - 1 ? 'border-b border-slate-100 dark:border-[#23482f]' : ''} hover:bg-slate-50 dark:hover:bg-[#112217] transition-colors`}>
+                                    <div className="flex items-center gap-3 md:gap-4 min-w-0">
+                                        <div className="w-11 h-11 md:w-12 md:h-12 rounded-lg bg-slate-100 dark:bg-[#112217] flex flex-col items-center justify-center text-slate-500 dark:text-[#92c9a4] shrink-0">
+                                            <span className="text-[9px] md:text-[10px] font-bold leading-none">{item.month}</span>
+                                            <span className="text-base md:text-lg font-bold leading-tight">{item.day}</span>
+                                        </div>
+                                        <div className="min-w-0">
+                                            <h4 className="text-slate-900 dark:text-white font-bold text-sm md:text-base truncate">{item.title}</h4>
+                                            <div className="flex flex-wrap gap-1.5 md:gap-3 text-xs text-slate-500 dark:text-[#92c9a4] mt-0.5">
+                                                <span>{item.duration}</span>
+                                                <span>•</span>
+                                                <span>{item.volume}</span>
+                                                {item.prs && <><span>•</span><span>{item.prs}</span></>}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="flex items-center gap-4 mt-4 md:mt-0 w-full md:w-auto justify-between md:justify-end">
-                                    <div className="text-right">
-                                        <div className="text-xs text-slate-400">Est. 1RM Squat</div>
-                                        <div className="text-slate-900 dark:text-white font-bold">140 kg <span className="text-green-500 text-xs">▲ 2.5kg</span></div>
-                                    </div>
-                                    <button className="p-2 text-slate-400 hover:text-primary transition-colors">
-                                        <span className="material-symbols-outlined">chevron_right</span>
-                                    </button>
-                                </div>
-                            </div>
-                            {/* List Item 2 */}
-                            <div className="flex flex-col md:flex-row items-center justify-between p-4 border-b border-slate-100 dark:border-[#23482f] hover:bg-slate-50 dark:hover:bg-[#112217] transition-colors">
-                                <div className="flex items-center gap-4 w-full md:w-auto">
-                                    <div className="w-12 h-12 rounded-lg bg-slate-100 dark:bg-[#112217] flex items-center justify-center text-slate-500 dark:text-[#92c9a4]">
-                                        <span className="text-xs font-bold">FEB</span>
-                                        <span className="text-lg font-bold block -mt-1">10</span>
-                                    </div>
-                                    <div>
-                                        <h4 className="text-slate-900 dark:text-white font-bold">Push Day A</h4>
-                                        <div className="flex gap-3 text-xs text-slate-500 dark:text-[#92c9a4]">
-                                            <span>50 mins</span>
-                                            <span>•</span>
-                                            <span>12,300 kg Vol</span>
-                                            <span>•</span>
-                                            <span>2 PRs</span>
+                                    <div className="flex items-center gap-2 md:gap-4 shrink-0 ml-2">
+                                        <div className="text-right hidden sm:block">
+                                            <div className="text-xs text-slate-400">{item.label}</div>
+                                            <div className="text-slate-900 dark:text-white font-bold text-sm">
+                                                {item.value} <span className={`text-xs ${item.positive ? 'text-green-500' : 'text-slate-500'}`}>{item.change}</span>
+                                            </div>
                                         </div>
+                                        <button className="p-1.5 text-slate-400 hover:text-primary transition-colors flex items-center justify-center">
+                                            <span className="material-symbols-outlined text-[20px] leading-none">chevron_right</span>
+                                        </button>
                                     </div>
                                 </div>
-                                <div className="flex items-center gap-4 mt-4 md:mt-0 w-full md:w-auto justify-between md:justify-end">
-                                    <div className="text-right">
-                                        <div className="text-xs text-slate-400">Est. 1RM Bench</div>
-                                        <div className="text-slate-900 dark:text-white font-bold">95 kg <span className="text-slate-500 text-xs">-</span></div>
-                                    </div>
-                                    <button className="p-2 text-slate-400 hover:text-primary transition-colors">
-                                        <span className="material-symbols-outlined">chevron_right</span>
-                                    </button>
-                                </div>
-                            </div>
-                            {/* List Item 3 */}
-                            <div className="flex flex-col md:flex-row items-center justify-between p-4 hover:bg-slate-50 dark:hover:bg-[#112217] transition-colors">
-                                <div className="flex items-center gap-4 w-full md:w-auto">
-                                    <div className="w-12 h-12 rounded-lg bg-slate-100 dark:bg-[#112217] flex items-center justify-center text-slate-500 dark:text-[#92c9a4]">
-                                        <span className="text-xs font-bold">FEB</span>
-                                        <span className="text-lg font-bold block -mt-1">08</span>
-                                    </div>
-                                    <div>
-                                        <h4 className="text-slate-900 dark:text-white font-bold">Pull Day B</h4>
-                                        <div className="flex gap-3 text-xs text-slate-500 dark:text-[#92c9a4]">
-                                            <span>55 mins</span>
-                                            <span>•</span>
-                                            <span>14,100 kg Vol</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="flex items-center gap-4 mt-4 md:mt-0 w-full md:w-auto justify-between md:justify-end">
-                                    <div className="text-right">
-                                        <div className="text-xs text-slate-400">Est. 1RM Deadlift</div>
-                                        <div className="text-slate-900 dark:text-white font-bold">160 kg <span className="text-green-500 text-xs">▲ 5kg</span></div>
-                                    </div>
-                                    <button className="p-2 text-slate-400 hover:text-primary transition-colors">
-                                        <span className="material-symbols-outlined">chevron_right</span>
-                                    </button>
-                                </div>
-                            </div>
+                            ))}
                         </div>
                     </section>
-                </main>
-            </div>
+                </div>
+
+                <footer className="py-6 md:py-8 text-center text-slate-500 dark:text-[#92c9a4]/40 text-xs md:text-sm border-t border-slate-200 dark:border-[#23482f] mt-8">
+                    © 2024 Fitness Pro Track. All rights reserved.
+                </footer>
+            </main>
         </div>
     );
 }

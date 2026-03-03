@@ -18,6 +18,12 @@ const MAPPING = {
   'paperplane.fill': 'send',
   'chevron.left.forwardslash.chevron.right': 'code',
   'chevron.right': 'chevron-right',
+  // Fitness tab icons
+  'figure.run': 'fitness-center',
+  'dumbbell.fill': 'sports-gymnastics',
+  'server.rack': 'sports-gymnastics',
+  'chart.bar.fill': 'bar-chart',
+  'trophy.fill': 'emoji-events',
 } as IconMapping;
 
 /**

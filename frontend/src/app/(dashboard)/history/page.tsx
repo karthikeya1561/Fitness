@@ -1,29 +1,33 @@
 "use client";
 
-import { Sidebar } from "@/components/Sidebar";
+import { Sidebar, useSidebar } from "@/components/Sidebar";
 
 export default function HistoryPage() {
+    const { sidebarOpen, openSidebar, closeSidebar } = useSidebar();
     return (
         <div className="flex h-screen overflow-hidden bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen font-display">
-            <Sidebar />
-            <main className="flex-1 flex flex-col overflow-y-auto">
-                <header className="sticky top-0 z-10 flex items-center justify-between border-b border-slate-200 dark:border-[#23482f] bg-white/80 dark:bg-[#112217]/80 backdrop-blur-md px-8 py-4">
-                    <div className="flex items-center gap-4">
-                        <h2 className="text-slate-900 dark:text-white text-xl font-bold tracking-tight">Workout History</h2>
+            <Sidebar mobileOpen={sidebarOpen} onClose={closeSidebar} />
+            <main className="flex-1 flex flex-col overflow-y-auto min-w-0">
+                <header className="sticky top-0 z-10 flex items-center justify-between border-b border-slate-200 dark:border-[#23482f] bg-white/80 dark:bg-[#112217]/80 backdrop-blur-md px-4 md:px-8 py-4">
+                    <div className="flex items-center gap-3">
+                        <button onClick={openSidebar} className="lg:hidden p-2 rounded-lg text-slate-600 dark:text-white hover:bg-slate-100 dark:hover:bg-white/10 transition-colors" aria-label="Open menu">
+                            <span className="material-symbols-outlined text-[22px] leading-none">menu</span>
+                        </button>
+                        <h2 className="text-slate-900 dark:text-white text-lg md:text-xl font-bold tracking-tight">Workout History</h2>
                     </div>
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-2 md:gap-4">
                         <div className="relative hidden md:flex items-center bg-slate-100 dark:bg-[#23482f] rounded-lg px-3 py-2 cursor-pointer border border-transparent hover:border-primary/30 transition-all">
-                            <span className="material-symbols-outlined text-slate-400 dark:text-[#92c9a4] text-lg mr-2">calendar_month</span>
-                            <span className="text-sm font-medium text-slate-600 dark:text-white mr-4">October 2024</span>
-                            <span className="material-symbols-outlined text-slate-400 text-sm">keyboard_arrow_down</span>
+                            <span className="material-symbols-outlined text-slate-400 dark:text-[#92c9a4] text-[18px] leading-none mr-2">calendar_month</span>
+                            <span className="text-sm font-medium text-slate-600 dark:text-white mr-3">October 2024</span>
+                            <span className="material-symbols-outlined text-slate-400 text-[18px] leading-none">keyboard_arrow_down</span>
                         </div>
-                        <button className="p-2 rounded-lg bg-slate-100 dark:bg-[#23482f] text-slate-600 dark:text-white hover:text-primary transition-colors cursor-pointer">
-                            <span className="material-symbols-outlined">tune</span>
+                        <button className="p-2 rounded-lg bg-slate-100 dark:bg-[#23482f] text-slate-600 dark:text-white hover:text-primary transition-colors cursor-pointer flex items-center justify-center">
+                            <span className="material-symbols-outlined text-[20px] leading-none">tune</span>
                         </button>
                     </div>
                 </header>
-                <div className="p-8 max-w-5xl mx-auto w-full">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                <div className="p-4 md:p-8 max-w-5xl mx-auto w-full">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 mb-8 md:mb-10">
                         <div className="bg-white dark:bg-[#193322] border border-slate-200 dark:border-[#23482f] p-5 rounded-xl">
                             <p className="text-slate-500 dark:text-[#92c9a4] text-xs font-medium uppercase tracking-wider mb-1">Workouts</p>
                             <h3 className="text-2xl font-bold text-slate-900 dark:text-white">18</h3>

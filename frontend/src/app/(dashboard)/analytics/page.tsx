@@ -1,32 +1,36 @@
 "use client";
 
-import { Sidebar } from "@/components/Sidebar";
+import { Sidebar, useSidebar } from "@/components/Sidebar";
 
 export default function AnalyticsPage() {
+    const { sidebarOpen, openSidebar, closeSidebar } = useSidebar();
     return (
         <div className="flex h-screen overflow-hidden bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen font-display">
-            <Sidebar />
-            <main className="flex-1 flex flex-col overflow-y-auto">
-                <header className="sticky top-0 z-10 flex items-center justify-between border-b border-slate-200 dark:border-[#23482f] bg-white/80 dark:bg-[#112217]/80 backdrop-blur-md px-8 py-4">
-                    <div className="flex items-center gap-4">
-                        <h2 className="text-slate-900 dark:text-white text-xl font-bold tracking-tight">Fitness Progress Analytics</h2>
+            <Sidebar mobileOpen={sidebarOpen} onClose={closeSidebar} />
+            <main className="flex-1 flex flex-col overflow-y-auto min-w-0">
+                <header className="sticky top-0 z-10 flex items-center justify-between border-b border-slate-200 dark:border-[#23482f] bg-white/80 dark:bg-[#112217]/80 backdrop-blur-md px-4 md:px-8 py-4">
+                    <div className="flex items-center gap-3 min-w-0">
+                        <button onClick={openSidebar} className="lg:hidden p-2 rounded-lg text-slate-600 dark:text-white hover:bg-slate-100 dark:hover:bg-white/10 transition-colors shrink-0" aria-label="Open menu">
+                            <span className="material-symbols-outlined text-[22px] leading-none">menu</span>
+                        </button>
+                        <h2 className="text-slate-900 dark:text-white text-base md:text-xl font-bold tracking-tight truncate">Fitness Progress Analytics</h2>
                     </div>
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-2 md:gap-4 shrink-0">
                         <div className="flex bg-slate-100 dark:bg-[#23482f] rounded-lg p-1">
-                            <button className="px-4 py-1.5 text-xs font-bold rounded-md bg-white dark:bg-[#193322] shadow-sm text-primary">7D</button>
-                            <button className="px-4 py-1.5 text-xs font-bold rounded-md text-slate-500 dark:text-[#92c9a4]">30D</button>
-                            <button className="px-4 py-1.5 text-xs font-bold rounded-md text-slate-500 dark:text-[#92c9a4]">1Y</button>
-                            <button className="px-4 py-1.5 text-xs font-bold rounded-md text-slate-500 dark:text-[#92c9a4]">All</button>
+                            <button className="px-2.5 md:px-4 py-1.5 text-xs font-bold rounded-md bg-white dark:bg-[#193322] shadow-sm text-primary">7D</button>
+                            <button className="px-2.5 md:px-4 py-1.5 text-xs font-bold rounded-md text-slate-500 dark:text-[#92c9a4]">30D</button>
+                            <button className="hidden sm:block px-2.5 md:px-4 py-1.5 text-xs font-bold rounded-md text-slate-500 dark:text-[#92c9a4]">1Y</button>
+                            <button className="hidden sm:block px-2.5 md:px-4 py-1.5 text-xs font-bold rounded-md text-slate-500 dark:text-[#92c9a4]">All</button>
                         </div>
-                        <button className="p-2 rounded-lg bg-slate-100 dark:bg-[#23482f] text-slate-600 dark:text-white hover:text-primary transition-colors cursor-pointer">
-                            <span className="material-symbols-outlined text-xl">ios_share</span>
+                        <button className="p-2 rounded-lg bg-slate-100 dark:bg-[#23482f] text-slate-600 dark:text-white hover:text-primary transition-colors cursor-pointer flex items-center justify-center">
+                            <span className="material-symbols-outlined text-[20px] leading-none">ios_share</span>
                         </button>
                     </div>
                 </header>
 
-                <div className="p-8 max-w-7xl mx-auto w-full">
+                <div className="p-4 md:p-8 max-w-7xl mx-auto w-full">
                     {/* Key Metrics Cards */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-6 md:mb-8">
                         <div className="bg-white dark:bg-[#193322] border border-slate-200 dark:border-[#23482f] p-5 rounded-xl shadow-sm">
                             <div className="flex items-center justify-between mb-3">
                                 <span className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-[#92c9a4]/60">Bench Press PR</span>
